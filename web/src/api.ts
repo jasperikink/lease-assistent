@@ -128,8 +128,8 @@ export async function chat(berichten: Bericht[]): Promise<ChatResponse> {
   return json(await verzoek("POST", "/chat", opgeslagenWachtwoord(), { berichten }));
 }
 
-export async function voorbeelden(): Promise<Voorbeeld[]> {
-  return json(await verzoek("GET", "/voorbeelden", opgeslagenWachtwoord()));
+export async function voorbeelden(nieuw = false): Promise<Voorbeeld[]> {
+  return json(await verzoek("GET", nieuw ? "/voorbeelden?nieuw=true" : "/voorbeelden", opgeslagenWachtwoord()));
 }
 
 export async function herbereken(invoer: Herberekening): Promise<Controle> {

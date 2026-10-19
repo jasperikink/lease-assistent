@@ -35,6 +35,7 @@ export function App() {
   const [herberekend, setHerberekend] = useState(false);
   const [inbox, setInbox] = useState<Voorbeeld[] | null>(null);
   const [inboxFout, setInboxFout] = useState(false);
+  const [vernieuwen, setVernieuwen] = useState(false);
   const [gesteld, setGesteld] = useState(gesteldeVragen);
   const op = gesteld >= MAX_DEMO_VRAGEN;
   const einde = useRef<HTMLDivElement>(null);
@@ -47,14 +48,17 @@ export function App() {
     einde.current?.scrollIntoView({ behavior: "smooth" });
   }, [beurten, bezig]);
 
-  async function laadInbox() {
-    setInbox(null);
+  async function laadInbox(nieuw = false) {
+    if (!nieuw) setInbox(null);
     setInboxFout(false);
+    setVernieuwen(true);
     try {
-      setInbox(await voorbeelden());
+      setInbox(await voorbeelden(nieuw));
     } catch (e) {
       if (e instanceof NietIngelogd) setIngelogd(false);
       else setInboxFout(true);
+    } finally {
+      setVernieuwen(false);
     }
   }
 
@@ -135,7 +139,7 @@ export function App() {
       <main className="werkblad">
         <section className="gesprek" aria-live="polite">
           {beurten.length === 0 ? (
-            <Inbox berichten={inbox} fout={inboxFout} uitgeschakeld={op} onKies={verstuur} onVernieuw={laadInbox} />
+            <Inbox berichten={inbox} fout={inboxFout} bezig={vernieuwen} uitgeschakeld={op} onKies={verstuur} onVernieuw={() => laadInbox(true)} />
           ) : (
             <button type="button" className="terug" onClick={terug} disabled={bezig}>
               Terug naar de berichten

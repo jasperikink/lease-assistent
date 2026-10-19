@@ -54,6 +54,7 @@ button { font: inherit; cursor: pointer; }
 .inbox-kop button:hover:not(:disabled) { border-color: var(--inkt); }
 .inbox-kop button:disabled { opacity: 0.4; cursor: default; }
 .inbox ul { list-style: none; margin: 0; padding: 0; background: var(--vlak); border: 1px solid var(--lijn); border-radius: 14px; overflow: hidden; }
+.inbox ul.vernieuwen { opacity: 0.5; transition: opacity 0.15s; }
 .inbox li + li { border-top: 1px solid var(--lijn); }
 .inbox li button {
   display: block; width: 100%; text-align: left; background: none; border: 0;

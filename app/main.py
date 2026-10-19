@@ -70,8 +70,8 @@ def chat(req: ChatRequest, request: Request):
 
 
 @app.get("/voorbeelden", dependencies=[Depends(controleer_wachtwoord)])
-def lijst_voorbeelden() -> list[dict]:
-    return voorbeelden.maak_voorbeelden()
+def lijst_voorbeelden(nieuw: bool = False) -> list[dict]:
+    return voorbeelden.maak_voorbeelden(nieuw)
 
 
 @app.post("/controle", dependencies=[Depends(controleer_wachtwoord)])

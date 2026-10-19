@@ -50,6 +50,27 @@ export type ChatResponse = {
 };
 
 const SLEUTEL = "lease-assistent-wachtwoord";
+const TELLER = "lease-assistent-vragen";
+
+export const MAX_DEMO_VRAGEN = 5;
+
+export function gesteldeVragen(): number {
+  try {
+    return Number(localStorage.getItem(TELLER)) || 0;
+  } catch {
+    return 0;
+  }
+}
+
+export function telVraag(): number {
+  const aantal = gesteldeVragen() + 1;
+  try {
+    localStorage.setItem(TELLER, String(aantal));
+  } catch {
+    return aantal;
+  }
+  return aantal;
+}
 
 export class NietIngelogd extends Error {}
 

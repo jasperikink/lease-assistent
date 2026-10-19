@@ -205,20 +205,32 @@ button { font: inherit; cursor: pointer; }
   position: fixed; left: 0; right: 0; bottom: 0;
   background: var(--vlak);
   border-top: 1px solid var(--lijn);
-  padding: 14px 24px;
-  display: flex; gap: 10px; justify-content: center;
+  padding: 12px 24px 10px;
 }
+.invoer-binnen { max-width: 1132px; margin: 0 auto; }
+.invoer-rij { display: flex; gap: 10px; }
 .invoer textarea {
-  flex: 1; max-width: 1060px;
+  flex: 1;
   font: inherit; color: var(--inkt);
   border: 1px solid var(--lijn); border-radius: var(--radius);
   padding: 10px 12px; resize: none;
 }
+.invoer textarea:disabled { background: var(--papier); }
 .invoer button {
   background: var(--inkt); color: #fff; border: 0;
   border-radius: var(--radius); padding: 0 22px; font-weight: 600;
 }
 .invoer button:disabled { opacity: 0.4; cursor: default; }
+.teller { margin: 6px 0 0; font-size: 13px; color: var(--grijs); }
+
+.terug {
+  align-self: flex-start;
+  background: none; border: 1px solid var(--lijn); border-radius: 6px;
+  padding: 5px 12px; color: var(--inkt); font-size: 14px;
+}
+.terug:hover:not(:disabled) { border-color: var(--inkt); }
+.terug:disabled { opacity: 0.4; cursor: default; }
+.inbox li button:disabled { cursor: default; opacity: 0.5; }
 
 @media (max-width: 900px) {
   .werkblad { grid-template-columns: 1fr; }

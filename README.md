@@ -47,6 +47,7 @@ Antwoord + conceptbericht + welke tools gebruikt zijn
 | `app/agent.py` | De LangChain-agent met drie tools |
 | `app/main.py` | FastAPI: `/chat` (agent), `/controle` (herberekenen zonder AI), `/voorbeelden`, wachtwoord, en de gebouwde React-app |
 | `app/voorbeelden.py` | Demo-berichten met willekeurige echte auto's uit de RDW |
+| `app/limieten.py` | Limiet per IP en het inkorten van lange gesprekken |
 | `web/` | React + TypeScript (Vite): gesprek, dossier met kentekenplaat en oordeel, kopieerbaar klantbericht |
 | `tests/` | Tests voor elke laag; de RDW, de embeddings en het LLM worden gemockt |
 | `evals/` | Retrieval-eval (hit@1, hit@3, MRR) en extractie-eval op echte klantberichten |
@@ -91,6 +92,16 @@ Met alleen BM25 staat bij 30 vragen in 53% van de gevallen de juiste sectie in d
 3. Deploy. De React-app in `static/` wordt via de CDN geserveerd, `/chat` draait als functie.
 
 Zonder `DEMO_WACHTWOORD` is de API open voor iedereen met de link.
+
+## Kosten en misbruik beperken
+
+- Wachtwoord op alle endpoints (`DEMO_WACHTWOORD`).
+- Per IP maximaal 15 vragen per uur aan de agent, berichten van maximaal 1.500 tekens, en alleen de laatste 6 berichten van het gesprek gaan mee naar het model.
+- Maximaal 1.024 tokens per antwoord en maximaal 10 stappen per agent-run.
+- In de browser een teller van 5 demovragen. Dat is gebruiksgemak, geen beveiliging: wie zijn browseropslag leegt, begint opnieuw. De limieten op de server zijn de echte grens.
+- Herberekenen in het dossier gebruikt geen AI en telt dus niet mee.
+
+Zet daarnaast een uitgavenlimiet in de Anthropic Console. Op Vercel draaien soms meerdere instanties tegelijk, en elke instantie houdt zijn eigen tellers bij.
 
 ## Keuzes en afwegingen
 

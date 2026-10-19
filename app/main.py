@@ -4,11 +4,11 @@ import secrets
 from pathlib import Path
 
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-from app import agent, voorbeelden
+from app import agent, limieten, voorbeelden
 
 load_dotenv()
 
@@ -20,11 +20,11 @@ STATIC = Path(__file__).resolve().parent.parent / "static"
 
 class Bericht(BaseModel):
     role: str
-    content: str
+    content: str = Field(max_length=limieten.MAX_TEKENS_PER_BERICHT)
 
 
 class ChatRequest(BaseModel):
-    berichten: list[Bericht]
+    berichten: list[Bericht] = Field(max_length=20)
 
 
 class ChatResponse(BaseModel):
@@ -56,11 +56,14 @@ def inloggen():
 
 
 @app.post("/chat", response_model=ChatResponse, dependencies=[Depends(controleer_wachtwoord)])
-def chat(req: ChatRequest):
+def chat(req: ChatRequest, request: Request):
     if not req.berichten:
         raise HTTPException(status_code=400, detail="Geen berichten meegestuurd.")
+    ip = request.headers.get("x-forwarded-for", request.client.host if request.client else "onbekend")
+    if not limieten.binnen_limiet(ip.split(",")[0].strip()):
+        raise HTTPException(status_code=429, detail="Je hebt het maximum aantal vragen voor dit uur bereikt.")
     try:
-        return agent.ask([b.model_dump() for b in req.berichten])
+        return agent.ask(limieten.kort_in([b.model_dump() for b in req.berichten]))
     except Exception as e:
         log.exception("Fout in de agent")
         raise HTTPException(status_code=502, detail=f"{type(e).__name__}: {e}")

@@ -70,3 +70,20 @@ def test_controle_onbekend_kenteken(monkeypatch):
     monkeypatch.setattr(rdw, "fetch_vehicle", lambda kenteken: None)
     res = client.post("/controle", json={"kenteken": "QQ999Q", "aankoopprijs": 25000, "looptijd_maanden": 48})
     assert res.status_code == 422
+
+
+def test_te_lang_bericht_wordt_geweigerd():
+    res = client.post("/chat", json={"berichten": [{"role": "user", "content": "x" * 5000}]})
+    assert res.status_code == 422
+
+
+def test_voorbeelden_geven_nooit_een_fout(monkeypatch):
+    from app import voorbeelden
+
+    def kapot(*a, **kw):
+        raise TypeError("onverwacht")
+
+    monkeypatch.setattr(voorbeelden.requests, "get", kapot)
+    res = client.get("/voorbeelden")
+    assert res.status_code == 200
+    assert len(res.json()) >= 3

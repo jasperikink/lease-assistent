@@ -4,12 +4,15 @@ import {
   Bron,
   Controle,
   Herberekening,
+  MAX_DEMO_VRAGEN,
   NietIngelogd,
   Voertuig,
   Voorbeeld,
   chat,
+  gesteldeVragen,
   herbereken,
   opgeslagenWachtwoord,
+  telVraag,
   voorbeelden,
 } from "./api";
 import { Antwoord } from "./components/Antwoord";
@@ -31,6 +34,9 @@ export function App() {
   const [voertuig, setVoertuig] = useState<Voertuig | null>(null);
   const [herberekend, setHerberekend] = useState(false);
   const [inbox, setInbox] = useState<Voorbeeld[] | null>(null);
+  const [inboxFout, setInboxFout] = useState(false);
+  const [gesteld, setGesteld] = useState(gesteldeVragen);
+  const op = gesteld >= MAX_DEMO_VRAGEN;
   const einde = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,12 +49,20 @@ export function App() {
 
   async function laadInbox() {
     setInbox(null);
+    setInboxFout(false);
     try {
       setInbox(await voorbeelden());
     } catch (e) {
       if (e instanceof NietIngelogd) setIngelogd(false);
-      else setInbox([]);
+      else setInboxFout(true);
     }
+  }
+
+  function terug() {
+    setBeurten([]);
+    setControle(null);
+    setVoertuig(null);
+    setHerberekend(false);
   }
 
   async function onHerbereken(invoer: Herberekening): Promise<Controle> {
@@ -65,7 +79,7 @@ export function App() {
 
   async function verstuur(tekst: string) {
     const vraag = tekst.trim();
-    if (!vraag || bezig) return;
+    if (!vraag || bezig || op) return;
 
     const geschiedenis: Bericht[] = beurten.flatMap((b): Bericht[] =>
       b.soort === "vraag" ? [{ role: "user", content: b.tekst }]
@@ -79,6 +93,7 @@ export function App() {
     try {
       const res = await chat([...geschiedenis, { role: "user", content: vraag }]);
       setBeurten((huidig) => [...huidig, { soort: "antwoord", tekst: res.antwoord, tools: res.tools, bronnen: res.bronnen }]);
+      setGesteld(telVraag());
       if (res.controle) {
         setControle(res.controle);
         setHerberekend(false);
@@ -119,7 +134,13 @@ export function App() {
 
       <main className="werkblad">
         <section className="gesprek" aria-live="polite">
-          {beurten.length === 0 && <Inbox berichten={inbox} onKies={verstuur} onVernieuw={laadInbox} />}
+          {beurten.length === 0 ? (
+            <Inbox berichten={inbox} fout={inboxFout} uitgeschakeld={op} onKies={verstuur} onVernieuw={laadInbox} />
+          ) : (
+            <button type="button" className="terug" onClick={terug} disabled={bezig}>
+              Terug naar de berichten
+            </button>
+          )}
 
           {beurten.map((b, i) =>
             b.soort === "vraag" ? (
@@ -139,18 +160,29 @@ export function App() {
       </main>
 
       <form className="invoer" onSubmit={onSubmit}>
-        <label htmlFor="bericht" className="sr-only">Bericht van de klant</label>
-        <textarea
-          id="bericht"
-          value={invoer}
-          onChange={(e) => setInvoer(e.target.value)}
-          onKeyDown={onKeyDown}
-          placeholder="Plak hier het bericht van de klant"
-          rows={2}
-        />
-        <button type="submit" disabled={bezig || !invoer.trim()}>
-          Controleer
-        </button>
+        <div className="invoer-binnen">
+          <label htmlFor="bericht" className="sr-only">Bericht van de klant</label>
+          <div className="invoer-rij">
+            <textarea
+              id="bericht"
+              value={invoer}
+              onChange={(e) => setInvoer(e.target.value)}
+              onKeyDown={onKeyDown}
+              placeholder={op ? "De demovragen zijn op" : "Plak hier het bericht van de klant"}
+              rows={2}
+              maxLength={1500}
+              disabled={op}
+            />
+            <button type="submit" disabled={bezig || op || !invoer.trim()}>
+              Controleer
+            </button>
+          </div>
+          <p className="teller">
+            {op
+              ? `Je hebt de ${MAX_DEMO_VRAGEN} vragen van deze demo gebruikt. Herberekenen in het dossier kan nog wel, dat gebruikt geen AI.`
+              : `Nog ${MAX_DEMO_VRAGEN - gesteld} van ${MAX_DEMO_VRAGEN} vragen in deze demo.`}
+          </p>
+        </div>
       </form>
     </div>
   );

@@ -102,7 +102,7 @@ def zoek_in_beleid(vraag: str) -> list[dict]:
     Gebruik dit voor elke vraag over regels, voorwaarden, btw, aflossen, documenten of het proces."""
     return [
         {"document": p.metadata["titel"], "sectie": p.metadata["sectie"], "tekst": p.page_content}
-        for p in rag.zoek(vraag, k=4)
+        for p in rag.zoek(vraag, k=3)
     ]
 
 
@@ -138,6 +138,7 @@ def maak_agent():
     workspace = os.getenv("ANTHROPIC_WORKSPACE_ID")
     llm = ChatAnthropic(
         model=os.getenv("ANTHROPIC_MODEL", "claude-sonnet-5-5"),
+        max_tokens=1024,
         default_headers={"anthropic-workspace-id": workspace} if workspace else None,
     )
     prompt = SYSTEM_PROMPT.format(vandaag=date.today().isoformat())
@@ -155,7 +156,7 @@ def lees_tool_resultaat(message) -> dict | list | None:
 
 
 def ask(berichten: list[dict]) -> dict:
-    result = maak_agent().invoke({"messages": berichten})
+    result = maak_agent().invoke({"messages": berichten}, config={"recursion_limit": 10})
     tools = []
     controle = None
     voertuig = None

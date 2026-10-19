@@ -1,4 +1,5 @@
 import random
+from concurrent.futures import ThreadPoolExecutor
 
 import requests
 
@@ -10,13 +11,13 @@ BESTELBUS = "voertuigsoort='Bedrijfsauto' AND datum_eerste_toelating_dt > '2021-
 
 
 def willekeurig(where: str) -> Vehicle | None:
-    params = {"$where": where, "$order": "kenteken", "$limit": 1, "$offset": random.randint(0, 2000)}
+    params = {"$where": where, "$limit": 1, "$offset": random.randint(0, 500)}
     try:
-        res = requests.get(rdw.RDW_URL, params=params, timeout=8)
+        res = requests.get(rdw.RDW_URL, params=params, timeout=5)
         res.raise_for_status()
         data = res.json()
         return rdw.parse_vehicle(data[0]) if data else None
-    except (requests.RequestException, KeyError, ValueError):
+    except Exception:
         return None
 
 
@@ -36,8 +37,8 @@ def naam(vehicle: Vehicle) -> str:
 
 
 def maak_voorbeelden() -> list[dict]:
-    auto = willekeurig(JONGE_AUTO)
-    bus = willekeurig(BESTELBUS)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        auto, bus = pool.map(willekeurig, [JONGE_AUTO, BESTELBUS])
 
     berichten = [
         {

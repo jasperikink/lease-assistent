@@ -23,6 +23,7 @@ export type Controle = {
   rente_pct: number;
   maandbedrag: number | null;
   slottermijn_eind: number;
+  nieuw?: boolean;
   let_op?: string;
 };
 
@@ -31,7 +32,9 @@ export type Bericht = { role: "user" | "assistant"; content: string };
 export type Voorbeeld = { afzender: string; tijd: string; tekst: string };
 
 export type Herberekening = {
-  kenteken: string;
+  kenteken: string | null;
+  omschrijving: string | null;
+  voertuigsoort: string;
   aankoopprijs: number;
   looptijd_maanden: number;
   aanbetaling: number;

@@ -30,10 +30,12 @@ export function Dossier({ controle, voertuig, herberekend, onHerbereken }: Props
 
   return (
     <aside className="dossier">
-      <Kenteken kenteken={auto.kenteken} />
-      <h2 className="auto">{netjes(naam)}</h2>
+      <Kenteken kenteken={auto.kenteken || "NIEUW"} />
+      <h2 className="auto">{auto.kenteken ? netjes(naam) : naam}</h2>
       <p className="auto-meta">
-        {auto.voertuigsoort}, eerste toelating {maand(auto.eerste_toelating)}
+        {auto.kenteken
+          ? `${auto.voertuigsoort}, eerste toelating ${maand(auto.eerste_toelating)}`
+          : `${auto.voertuigsoort}, nieuw, nog geen kenteken`}
       </p>
 
       {controle && (

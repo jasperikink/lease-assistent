@@ -28,6 +28,11 @@ AANVRAGEN = [
         "4.000 aanbetaling. Mijn bureau bestaat sinds 2019.",
     },
     {
+        "afzender": "Mila, interieurstudio",
+        "tekst": "Hoi! Ik wil een nieuwe Volkswagen ID. Buzz Cargo bestellen bij de dealer, hij heeft nog geen kenteken. "
+        "Prijs 52.000, 60 maanden, 15% slottermijn. Mijn bedrijf bestaat sinds 2020.",
+    },
+    {
         "afzender": "Fatima, kapsalon",
         "tekst": "Hoi, ik wil de Renault Clio XX-999-X voor 14.950. Kan dat over 60 maanden met 35% slottermijn? "
         "Ik sta 2 jaar bij de KvK.",

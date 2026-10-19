@@ -81,9 +81,9 @@ python -m evals.run_retrieval    # vindt de retrieval de juiste beleidssectie?
 python -m evals.run_extractie    # haalt de agent de juiste gegevens uit een klantbericht? (gebruikt de API)
 ```
 
-De kennisbank in `data/` is een fictief handboek van Voorbeeld Lease B.V., geschreven met behulp van Claude: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies voor adviseurs, samen 50 secties.
+De kennisbank in `data/` is een fictief handboek van Voorbeeld Lease B.V., geschreven met behulp van Claude: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies voor adviseurs, samen 51 secties.
 
-Met alleen BM25 staat bij 31 vragen in 55% van de gevallen de juiste sectie in de top 3. De missers zijn vragen in andere woorden dan het handboek: "zzp'er" in plaats van "starter", "jaarrekening" in plaats van "jaarcijfers", "papieren" in plaats van "documenten". Met `VOYAGE_API_KEY` draait dezelfde eval ook hybrid, zodat je het verschil ziet.
+Met alleen BM25 staat bij 32 vragen in 56% van de gevallen de juiste sectie in de top 3. De missers zijn vragen in andere woorden dan het handboek: "zzp'er" in plaats van "starter", "jaarrekening" in plaats van "jaarcijfers", "papieren" in plaats van "documenten". Met `VOYAGE_API_KEY` draait dezelfde eval ook hybrid, zodat je het verschil ziet.
 
 ## Online zetten (Vercel)
 
@@ -108,6 +108,7 @@ Zet daarnaast een uitgavenlimiet in de Anthropic Console. Op Vercel draaien soms
 - **Alle redenen tegelijk.** Een afwijzing noemt alles wat misgaat, met de grens en een alternatief ("kies een looptijd van maximaal 39 maanden"). Een adviseur wil de klant in één keer helpen.
 - **RDW-fouten zijn geen "niet gevonden".** Ligt de RDW plat, dan meldt de assistent dat eerlijk, in plaats van te zeggen dat het kenteken niet bestaat.
 - **Hybrid retrieval in plaats van alleen embeddings.** BM25 is sterk op exacte termen uit het beleid ("slottermijn", "KvK"), embeddings op vragen in andere woorden ("zzp'er", "tussentijds afkopen"). Reciprocal rank fusion combineert de twee ranglijsten zonder dat je scores hoeft te normaliseren. Zonder Voyage-key valt het systeem terug op BM25, zodat het altijd werkt.
+- **Nieuwe auto zonder kenteken.** Dan is er niets op te halen bij de RDW. De controle rekent met een auto van 0 maanden oud, met merk en model uit het bericht, en volgt verder hetzelfde beleid.
 - **De adviseur blijft ertussen.** De assistent schrijft een conceptbericht, geen automatisch antwoord aan de klant.
 
 ## Volgende stappen

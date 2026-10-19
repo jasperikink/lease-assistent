@@ -2,6 +2,7 @@ import logging
 import os
 import secrets
 from pathlib import Path
+from typing import Literal
 
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
@@ -36,7 +37,9 @@ class ChatResponse(BaseModel):
 
 
 class ControleRequest(BaseModel):
-    kenteken: str
+    kenteken: str | None = None
+    omschrijving: str | None = None
+    voertuigsoort: Literal["Personenauto", "Bedrijfsauto"] = "Personenauto"
     aankoopprijs: float
     looptijd_maanden: int
     aanbetaling: float = 0

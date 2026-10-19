@@ -87,3 +87,13 @@ def test_voorbeelden_geven_nooit_een_fout(monkeypatch):
     res = client.get("/voorbeelden")
     assert res.status_code == 200
     assert len(res.json()) >= 3
+
+
+def test_controle_nieuwe_auto_zonder_kenteken():
+    res = client.post(
+        "/controle",
+        json={"omschrijving": "Kia EV3", "aankoopprijs": 38000, "looptijd_maanden": 48, "kvk_maanden": 24},
+    )
+    assert res.status_code == 200
+    assert res.json()["nieuw"] is True
+    assert res.json()["maandbedrag"] > 0

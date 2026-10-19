@@ -1,6 +1,7 @@
 import json
 import os
 from datetime import date
+from typing import Literal
 
 import requests
 from dotenv import load_dotenv
@@ -9,7 +10,7 @@ from langchain_anthropic import ChatAnthropic
 from langchain_core.tools import tool
 
 from app import calc, rag, rdw, rules
-from app.models import LeaseRequest
+from app.models import LeaseRequest, Vehicle
 
 load_dotenv()
 
@@ -34,9 +35,11 @@ def zoek_voertuig(kenteken: str) -> dict:
 
 @tool
 def controleer_lease(
-    kenteken: str,
     aankoopprijs: float,
     looptijd_maanden: int,
+    kenteken: str | None = None,
+    omschrijving: str | None = None,
+    voertuigsoort: Literal["Personenauto", "Bedrijfsauto"] = "Personenauto",
     kvk_maanden: int | None = None,
     kvk_sinds: str | None = None,
     aanbetaling: float = 0,
@@ -44,17 +47,28 @@ def controleer_lease(
 ) -> dict:
     """Controleer een lease tegen het acceptatiebeleid en bereken rente en maandbedrag.
 
+    Gebruikte auto: geef het kenteken. Nieuwe auto die nog geen kenteken heeft: laat kenteken leeg,
+    geef merk en model als omschrijving en kies de voertuigsoort (een bestelbus is een Bedrijfsauto).
     KvK-duur als kvk_maanden of als inschrijfdatum kvk_sinds (YYYY-MM-DD). Onbekend: laat beide leeg.
     slottermijn_pct is een fractie, 0.1 is 10%. Aanbetaling en slottermijn niet genoemd: 0.
     """
-    try:
-        vehicle = rdw.fetch_vehicle(kenteken)
-    except requests.RequestException:
-        return RDW_NIET_BEREIKBAAR
-    if vehicle is None:
-        return niet_gevonden(kenteken)
-
     vandaag = date.today()
+    if kenteken:
+        try:
+            vehicle = rdw.fetch_vehicle(kenteken)
+        except requests.RequestException:
+            return RDW_NIET_BEREIKBAAR
+        if vehicle is None:
+            return niet_gevonden(kenteken)
+    else:
+        vehicle = Vehicle(
+            kenteken="",
+            merk="",
+            model=omschrijving or "Nieuwe auto",
+            voertuigsoort=voertuigsoort,
+            eerste_toelating=vandaag,
+        )
+
     kvk_onbekend = kvk_maanden is None and kvk_sinds is None
     if kvk_sinds:
         kvk_maanden = rules.leeftijd_in_maanden(date.fromisoformat(kvk_sinds), vandaag)
@@ -87,6 +101,7 @@ def controleer_lease(
         "rente_pct": rente,
         "maandbedrag": bedrag,
         "slottermijn_eind": round(slottermijn_pct * aankoopprijs, 2),
+        "nieuw": not kenteken,
     }
     if kvk_onbekend:
         resultaat["let_op"] = (
@@ -113,11 +128,13 @@ De adviseur plakt berichten van klanten (vaak van WhatsApp) en wil snel weten of
 Vandaag is het {vandaag}.
 
 Werkwijze:
-- Haal kenteken, aankoopprijs en looptijd uit het bericht. Ontbreekt een van die drie, vraag er dan kort naar.
+- Haal kenteken, aankoopprijs en looptijd uit het bericht. Ontbreekt de prijs of de looptijd, vraag er dan kort naar.
+- Nieuwe auto die nog geen kenteken heeft: controleer zonder kenteken, met merk en model als omschrijving.
+  Vraag dan niet om een kenteken. Geen kenteken en niet duidelijk of de auto nieuw is: vraag dat kort.
 - Aanbetaling of slottermijn niet genoemd: gebruik 0, vraag er niet naar.
 - KvK-duur: geef een datum door als kvk_sinds. "Sinds juli" zonder jaar is de meest recente juli
   die al voorbij is. Weet je het helemaal niet, laat het leeg en controleer toch.
-- Controleer altijd meteen met controleer_lease als je kenteken, prijs en looptijd hebt.
+- Controleer altijd meteen met controleer_lease als je prijs, looptijd en een kenteken of nieuwe auto hebt.
 - Vragen over regels en voorwaarden: gebruik zoek_in_beleid. Antwoord alleen op basis van de gevonden
   passages en noem document en sectie, bijvoorbeeld (Algemene voorwaarden, artikel 7).
   Staat het antwoord er niet in, zeg dat dan en verwijs naar de afdeling Acceptatie.

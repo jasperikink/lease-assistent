@@ -62,3 +62,27 @@ def test_controleer_lease_zonder_kvk_meldt_dat(monkeypatch):
     })
     assert result["geaccepteerd"] is True
     assert "KvK-duur onbekend" in result["let_op"]
+
+
+def test_nieuwe_auto_zonder_kenteken(monkeypatch):
+    def niet_aanroepen(kenteken):
+        raise AssertionError("geen RDW zonder kenteken")
+
+    monkeypatch.setattr(rdw, "fetch_vehicle", niet_aanroepen)
+    result = agent.controleer_lease.invoke({
+        "omschrijving": "Volkswagen ID. Buzz Cargo", "voertuigsoort": "Bedrijfsauto",
+        "aankoopprijs": 52_000, "looptijd_maanden": 60, "kvk_maanden": 60, "slottermijn_pct": 0.15,
+    })
+    assert result["geaccepteerd"] is True
+    assert result["nieuw"] is True
+    assert result["rente_pct"] == 6.9
+    assert result["voertuig"]["model"] == "Volkswagen ID. Buzz Cargo"
+    assert result["voertuig"]["voertuigsoort"] == "Bedrijfsauto"
+
+
+def test_nieuwe_auto_volgt_verder_het_beleid():
+    result = agent.controleer_lease.invoke({
+        "omschrijving": "Kia EV3", "aankoopprijs": 38_000, "looptijd_maanden": 84, "kvk_maanden": 24,
+    })
+    assert result["geaccepteerd"] is False
+    assert any("84 maanden" in r for r in result["redenen"])

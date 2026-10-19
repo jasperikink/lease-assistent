@@ -44,7 +44,9 @@ export function Invoer({ controle, onHerbereken }: Props) {
     setMelding("");
     try {
       const nieuw = await onHerbereken({
-        kenteken: controle.voertuig.kenteken,
+        kenteken: controle.voertuig.kenteken || null,
+        omschrijving: controle.voertuig.kenteken ? null : controle.voertuig.model,
+        voertuigsoort: controle.voertuig.voertuigsoort,
         aankoopprijs: getal(velden.aankoopprijs),
         aanbetaling: getal(velden.aanbetaling),
         looptijd_maanden: Math.round(getal(velden.looptijd)),

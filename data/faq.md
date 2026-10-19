@@ -8,6 +8,9 @@ Bij financial lease ben je economisch eigenaar en wordt de auto aan het einde va
 ## Welke auto's kan ik bij jullie leasen?
 We hebben zelf geen auto's op voorraad. Je kiest zelf een auto, bij een dealer of van een particulier, en wij financieren hem. Dat kan een personenauto of een bedrijfsauto zijn, nieuw of gebruikt, met een Nederlands kenteken, maximaal 8 jaar oud bij de start en met een aankoopbedrag vanaf €5.000. Motoren, campers, aanhangers en oldtimers financieren we niet.
 
+## Kan ik een nieuwe auto leasen die nog geen kenteken heeft?
+Ja. We beoordelen de aanvraag op basis van de offerte of orderbevestiging van de dealer, dus voordat de auto er is. Een nieuwe auto valt in het laagste rentetarief. Het aankoopbedrag betalen we aan de dealer zodra de auto op kenteken staat en wordt geleverd.
+
 ## Kan ik een auto uit Duitsland leasen?
 Ja, maar de auto moet bij de start van het contract een Nederlands kenteken hebben. Importkosten en bpm kunnen onderdeel zijn van het aankoopbedrag.
 

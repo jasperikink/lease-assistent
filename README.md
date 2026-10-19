@@ -16,7 +16,7 @@ De adviseur kan daarna in het dossier looptijd, aanbetaling of slottermijn aanpa
 
 De demo-inbox haalt bij elke keer openen willekeurige echte auto's uit de RDW op, zodat je steeds andere gevallen ziet.
 
-> Het beleid in `data/` is verzonnen voor dit project.
+> Het beleid in `data/` is verzonnen voor dit project en geschreven met behulp van Claude.
 
 ## Het belangrijkste ontwerpprincipe
 
@@ -81,7 +81,7 @@ python -m evals.run_retrieval    # vindt de retrieval de juiste beleidssectie?
 python -m evals.run_extractie    # haalt de agent de juiste gegevens uit een klantbericht? (gebruikt de API)
 ```
 
-De kennisbank in `data/` is een fictief handboek van Voorbeeld Lease B.V.: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies voor adviseurs, samen 49 secties.
+De kennisbank in `data/` is een fictief handboek van Voorbeeld Lease B.V., geschreven met behulp van Claude: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies voor adviseurs, samen 49 secties.
 
 Met alleen BM25 staat bij 30 vragen in 53% van de gevallen de juiste sectie in de top 3. De missers zijn vragen in andere woorden dan het handboek: "zzp'er" in plaats van "starter", "jaarrekening" in plaats van "jaarcijfers", "papieren" in plaats van "documenten". Met `VOYAGE_API_KEY` draait dezelfde eval ook hybrid, zodat je het verschil ziet.
 

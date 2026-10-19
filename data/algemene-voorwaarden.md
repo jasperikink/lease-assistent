@@ -1,6 +1,6 @@
 # Algemene voorwaarden financial lease
 
-> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo.
+> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo en geschreven met behulp van Claude.
 
 ## Artikel 1. Eigendom
 De lessee wordt bij de start economisch eigenaar van het object. Het juridisch eigendom blijft bij Voorbeeld Lease tot alle termijnen en de slottermijn zijn betaald.

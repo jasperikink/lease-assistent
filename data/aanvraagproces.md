@@ -1,6 +1,6 @@
 # Aanvraagproces
 
-> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo.
+> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo en geschreven met behulp van Claude.
 
 ## Stappen
 De klant kiest een auto en stuurt het kenteken, de prijs en de gewenste looptijd. De adviseur maakt een voorcheck en een offerte. Na akkoord van de klant dient de adviseur de aanvraag in bij de bank. Na goedkeuring tekent de klant digitaal en kan de auto worden opgehaald.

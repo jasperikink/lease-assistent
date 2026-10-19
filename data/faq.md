@@ -1,6 +1,6 @@
 # Veelgestelde vragen
 
-> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo.
+> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo en geschreven met behulp van Claude.
 
 ## Wat is het verschil tussen financial lease en operational lease?
 Bij financial lease ben je economisch eigenaar en wordt de auto aan het einde van jou. Bij operational lease huur je de auto en lever je hem aan het einde weer in.

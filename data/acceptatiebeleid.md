@@ -1,6 +1,6 @@
 # Acceptatiebeleid financial lease
 
-> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo.
+> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo en geschreven met behulp van Claude.
 
 ## Voor wie
 We financieren ondernemers met een inschrijving bij de Kamer van Koophandel: eenmanszaken, vof's, maatschappen en bv's. Particulieren en stichtingen zonder winstoogmerk financieren we niet.

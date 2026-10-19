@@ -1,6 +1,6 @@
 # Werkinstructies voor adviseurs
 
-> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo.
+> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo en geschreven met behulp van Claude.
 
 ## Een WhatsApp-aanvraag beoordelen
 Vraag altijd naar kenteken, aankoopprijs, gewenste looptijd en hoe lang de klant bij de KvK staat. Doe eerst de voorcheck op leeftijd en looptijd: dat is de meest voorkomende reden voor afwijzing.

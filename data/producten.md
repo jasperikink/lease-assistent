@@ -1,6 +1,6 @@
 # Producten
 
-> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo.
+> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo en geschreven met behulp van Claude.
 
 ## Financial lease personenauto
 Voor nieuwe en gebruikte personenauto's die zakelijk worden gebruikt. Aankoopbedrag vanaf €5.000, looptijd 12 tot 72 maanden, met of zonder slottermijn.

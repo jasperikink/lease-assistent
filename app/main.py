@@ -32,6 +32,7 @@ class ChatResponse(BaseModel):
     tools: list[str]
     controle: dict | None = None
     voertuig: dict | None = None
+    bronnen: list[dict] = []
 
 
 class ControleRequest(BaseModel):

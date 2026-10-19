@@ -9,7 +9,7 @@ Binnen een paar seconden krijgt de adviseur:
 - welke auto het is, opgehaald bij de RDW
 - of de aanvraag binnen het acceptatiebeleid valt, en zo niet, waarom niet en wat wel kan
 - de rente en het maandbedrag
-- antwoorden op beleidsvragen, met de sectie als bron
+- antwoorden op vragen over beleid en voorwaarden, met de gevonden passages uit het handboek erbij
 - een conceptbericht om naar de klant te sturen
 
 De adviseur kan daarna in het dossier looptijd, aanbetaling of slottermijn aanpassen en direct herberekenen. Dat gebeurt zonder AI: alleen de regels en de rekensom.
@@ -80,7 +80,9 @@ python -m evals.run_retrieval    # vindt de retrieval de juiste beleidssectie?
 python -m evals.run_extractie    # haalt de agent de juiste gegevens uit een klantbericht? (gebruikt de API)
 ```
 
-Met alleen BM25 vindt de retrieval bij 17 vragen in 71% van de gevallen de juiste sectie in de top 3. De missers zijn vragen in andere woorden dan het beleid: "zzp'er" in plaats van "starter", "motor" terwijl het beleid alleen auto's noemt. Met `VOYAGE_API_KEY` draait dezelfde eval ook hybrid, zodat je het verschil ziet.
+De kennisbank in `data/` is een fictief handboek van Voorbeeld Lease B.V.: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies voor adviseurs, samen 49 secties.
+
+Met alleen BM25 staat bij 30 vragen in 53% van de gevallen de juiste sectie in de top 3. De missers zijn vragen in andere woorden dan het handboek: "zzp'er" in plaats van "starter", "jaarrekening" in plaats van "jaarcijfers", "papieren" in plaats van "documenten". Met `VOYAGE_API_KEY` draait dezelfde eval ook hybrid, zodat je het verschil ziet.
 
 ## Online zetten (Vercel)
 

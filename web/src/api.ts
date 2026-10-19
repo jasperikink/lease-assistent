@@ -39,11 +39,14 @@ export type Herberekening = {
   kvk_maanden: number | null;
 };
 
+export type Bron = { document: string; sectie: string; tekst: string };
+
 export type ChatResponse = {
   antwoord: string;
   tools: string[];
   controle: Controle | null;
   voertuig: Voertuig | null;
+  bronnen: Bron[];
 };
 
 const SLEUTEL = "lease-assistent-wachtwoord";

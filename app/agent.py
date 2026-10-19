@@ -97,10 +97,13 @@ def controleer_lease(
 
 
 @tool
-def zoek_in_beleid(vraag: str) -> str:
-    """Zoek in het acceptatiebeleid en de FAQ. Gebruik dit voor vragen over regels, voorwaarden, btw of het proces."""
-    passages = rag.zoek(vraag)
-    return "\n\n".join(f"[{p.metadata['sectie']}] ({p.metadata['bron']})\n{p.page_content}" for p in passages)
+def zoek_in_beleid(vraag: str) -> list[dict]:
+    """Zoek in het handboek: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies.
+    Gebruik dit voor elke vraag over regels, voorwaarden, btw, aflossen, documenten of het proces."""
+    return [
+        {"document": p.metadata["titel"], "sectie": p.metadata["sectie"], "tekst": p.page_content}
+        for p in rag.zoek(vraag, k=4)
+    ]
 
 
 TOOLS = [zoek_voertuig, controleer_lease, zoek_in_beleid]
@@ -115,7 +118,9 @@ Werkwijze:
 - KvK-duur: geef een datum door als kvk_sinds. "Sinds juli" zonder jaar is de meest recente juli
   die al voorbij is. Weet je het helemaal niet, laat het leeg en controleer toch.
 - Controleer altijd meteen met controleer_lease als je kenteken, prijs en looptijd hebt.
-- Vragen over regels en voorwaarden: gebruik zoek_in_beleid en noem de sectie.
+- Vragen over regels en voorwaarden: gebruik zoek_in_beleid. Antwoord alleen op basis van de gevonden
+  passages en noem document en sectie, bijvoorbeeld (Algemene voorwaarden, artikel 7).
+  Staat het antwoord er niet in, zeg dat dan en verwijs naar de afdeling Acceptatie.
 
 Regels:
 - Reken nooit zelf en beslis nooit zelf of iets mag. Dat doen de tools.
@@ -139,12 +144,14 @@ def maak_agent():
     return create_agent(model=llm, tools=TOOLS, system_prompt=prompt)
 
 
-def lees_tool_resultaat(message) -> dict | None:
+def lees_tool_resultaat(message) -> dict | list | None:
     try:
         data = json.loads(message.content)
     except (TypeError, ValueError):
         return None
-    return None if "fout" in data else data
+    if isinstance(data, dict) and "fout" in data:
+        return None
+    return data
 
 
 def ask(berichten: list[dict]) -> dict:
@@ -152,6 +159,7 @@ def ask(berichten: list[dict]) -> dict:
     tools = []
     controle = None
     voertuig = None
+    bronnen = []
 
     for message in result["messages"]:
         tools += [call["name"] for call in getattr(message, "tool_calls", None) or []]
@@ -165,12 +173,15 @@ def ask(berichten: list[dict]) -> dict:
             voertuig = data["voertuig"]
         elif message.name == "zoek_voertuig":
             voertuig = data
+        elif message.name == "zoek_in_beleid":
+            bronnen += [b for b in data if b not in bronnen]
 
     return {
         "antwoord": result["messages"][-1].text,
         "tools": tools,
         "controle": controle,
         "voertuig": voertuig,
+        "bronnen": bronnen,
     }
 
 

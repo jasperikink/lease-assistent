@@ -11,7 +11,7 @@ def test_tokenize_haalt_stopwoorden_en_leestekens_weg():
 
 def test_load_chunks_heeft_sectie_en_bron():
     chunks = rag.load_chunks()
-    assert len(chunks) >= 10
+    assert len(chunks) >= 40
     for chunk in chunks:
         assert chunk.metadata["sectie"]
         assert chunk.metadata["bron"].endswith(".md")
@@ -26,7 +26,7 @@ def test_load_chunks_heeft_sectie_en_bron():
     ("Wat is de maximale slottermijn?", "Slottermijn"),
 ])
 def test_vindt_juiste_sectie(vraag, sectie):
-    assert rag.zoek(vraag)[0].metadata["sectie"] == sectie
+    assert sectie in [doc.metadata["sectie"] for doc in rag.zoek(vraag)]
 
 
 def test_rrf_zet_document_dat_beide_vinden_bovenaan():

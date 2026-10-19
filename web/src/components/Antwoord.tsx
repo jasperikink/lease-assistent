@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Markdown from "react-markdown";
+import { Bron } from "../api";
 
 const TOOL_LABELS: Record<string, string> = {
   zoek_voertuig: "RDW opgezocht",
@@ -14,7 +15,9 @@ function splits(tekst: string) {
   return { analyse: tekst.slice(0, match.index).trim(), klant };
 }
 
-export function Antwoord({ tekst, tools }: { tekst: string; tools: string[] }) {
+type Props = { tekst: string; tools: string[]; bronnen: Bron[] };
+
+export function Antwoord({ tekst, tools, bronnen }: Props) {
   const { analyse, klant } = splits(tekst);
   const [gekopieerd, setGekopieerd] = useState(false);
   const unieke = [...new Set(tools)];
@@ -42,6 +45,22 @@ export function Antwoord({ tekst, tools }: { tekst: string; tools: string[] }) {
           </div>
           <p>{klant}</p>
         </div>
+      )}
+
+      {bronnen.length > 0 && (
+        <details className="bronnen-lijst">
+          <summary>Gevonden in het handboek ({bronnen.length})</summary>
+          <ul>
+            {bronnen.map((b) => (
+              <li key={`${b.document}${b.sectie}`}>
+                <span className="bron-kop">
+                  {b.document}, {b.sectie}
+                </span>
+                <span className="bron-tekst">{b.tekst.slice(b.sectie.length).trim()}</span>
+              </li>
+            ))}
+          </ul>
+        </details>
       )}
 
       {unieke.length > 0 && (

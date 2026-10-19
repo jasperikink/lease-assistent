@@ -246,3 +246,13 @@ button { font: inherit; cursor: pointer; }
 }
 .inloggen button:disabled { opacity: 0.4; cursor: default; }
 .inloggen .inloggen-fout { color: var(--nee); margin: 10px 0 0; }
+
+.invoer-melding { margin: 8px 0 0; font-size: 14px; font-weight: 600; color: var(--inkt); }
+
+.bronnen-lijst { margin-top: 12px; font-size: 14px; }
+.bronnen-lijst summary { cursor: pointer; color: var(--grijs); }
+.bronnen-lijst summary:hover { color: var(--inkt); }
+.bronnen-lijst ul { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; }
+.bronnen-lijst li { border-left: 3px solid var(--lijn); padding-left: 10px; }
+.bron-kop { display: block; font-weight: 600; }
+.bron-tekst { display: block; color: var(--grijs); }

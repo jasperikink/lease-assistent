@@ -1,6 +1,9 @@
 # Veelgestelde vragen
 
-> Fictief document voor een oefenproject.
+> Fictief document van Voorbeeld Lease B.V., gemaakt voor een demo.
+
+## Wat is het verschil tussen financial lease en operational lease?
+Bij financial lease ben je economisch eigenaar en wordt de auto aan het einde van jou. Bij operational lease huur je de auto en lever je hem aan het einde weer in.
 
 ## Kan ik een auto uit Duitsland leasen?
 Ja, maar de auto moet bij de start van het contract een Nederlands kenteken hebben. Importkosten en bpm kunnen onderdeel zijn van het aankoopbedrag.
@@ -15,7 +18,19 @@ Na een complete aanvraag hoor je binnen 24 uur of de bank akkoord geeft.
 Bij financial lease ben je vanaf de start economisch eigenaar. De btw over het aankoopbedrag betaal je in één keer bij de start en vraag je als ondernemer terug in je eerstvolgende aangifte.
 
 ## Kan ik eerder aflossen?
-Ja, je kunt het contract op elk moment vervroegd aflossen. Daarvoor rekenen we een vergoeding van 2% over het openstaande bedrag.
+Ja, je kunt het contract op elk moment vervroegd aflossen. Daarvoor rekenen we 2% over het openstaande bedrag, met een minimum van €250. In het laatste jaar is het gratis.
 
 ## Wat gebeurt er aan het einde van het contract?
 Je betaalt de slottermijn en de auto is volledig van jou. Je kunt de slottermijn ook herfinancieren.
+
+## Kan ik de auto tussentijds verkopen?
+Ja, maar je moet het contract dan eerst volledig aflossen. Pas daarna kan de auto op naam van de koper.
+
+## Wat als mijn bedrijf stopt?
+Het contract loopt door en de termijnen blijven verschuldigd. Je kunt het contract aflossen, eventueel met de opbrengst van de verkoop van de auto.
+
+## Heb ik een BKR-toetsing?
+Ja, de bank toetst de ondernemer bij het BKR. Een lopende achterstand leidt tot afwijzing.
+
+## Mag ik de auto privé gebruiken?
+Ja, normaal privégebruik mag. Let op de bijtelling als de auto op de zaak staat.

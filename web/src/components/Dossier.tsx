@@ -12,7 +12,7 @@ type Props = {
   controle: Controle | null;
   voertuig: Voertuig | null;
   herberekend: boolean;
-  onHerbereken: (invoer: Herberekening) => Promise<void>;
+  onHerbereken: (invoer: Herberekening) => Promise<Controle>;
 };
 
 export function Dossier({ controle, voertuig, herberekend, onHerbereken }: Props) {

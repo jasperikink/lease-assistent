@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { Controle, Herberekening } from "../api";
 
-type Props = { controle: Controle; onHerbereken: (invoer: Herberekening) => Promise<void> };
+type Props = { controle: Controle; onHerbereken: (invoer: Herberekening) => Promise<Controle> };
 
 type Velden = {
   aankoopprijs: string;
@@ -27,6 +27,7 @@ export function Invoer({ controle, onHerbereken }: Props) {
   const [velden, setVelden] = useState(() => uitControle(controle));
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState("");
+  const [melding, setMelding] = useState("");
 
   useEffect(() => setVelden(uitControle(controle)), [controle]);
 
@@ -40,8 +41,9 @@ export function Invoer({ controle, onHerbereken }: Props) {
     e.preventDefault();
     setBezig(true);
     setFout("");
+    setMelding("");
     try {
-      await onHerbereken({
+      const nieuw = await onHerbereken({
         kenteken: controle.voertuig.kenteken,
         aankoopprijs: getal(velden.aankoopprijs),
         aanbetaling: getal(velden.aanbetaling),
@@ -49,6 +51,11 @@ export function Invoer({ controle, onHerbereken }: Props) {
         slottermijn_pct: getal(velden.slottermijn) / 100,
         kvk_maanden: velden.kvk.trim() === "" ? null : Math.round(getal(velden.kvk)),
       });
+      setMelding(
+        nieuw.geaccepteerd
+          ? "Herberekend: past binnen het beleid."
+          : `Herberekend: nog ${nieuw.redenen.length} ${nieuw.redenen.length === 1 ? "reden" : "redenen"} om af te wijzen.`,
+      );
     } catch (err) {
       setFout(err instanceof Error ? err.message : "Herberekenen mislukt.");
     } finally {
@@ -82,6 +89,7 @@ export function Invoer({ controle, onHerbereken }: Props) {
         {bezig ? "Rekenen" : "Herbereken"}
       </button>
       <p className="invoer-uitleg">Herberekenen gebruikt alleen de regels en de rekensom, geen AI.</p>
+      {melding && <p className="invoer-melding" role="status">{melding}</p>}
       {fout && <p className="invoer-fout" role="alert">{fout}</p>}
     </form>
   );

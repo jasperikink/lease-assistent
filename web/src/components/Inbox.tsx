@@ -8,9 +8,9 @@ type Props = {
 
 export function Inbox({ berichten, onKies, onVernieuw }: Props) {
   return (
-    <section className="inbox" aria-label="Binnengekomen berichten">
+    <section className="inbox" aria-label="Voorbeeldberichten">
       <div className="inbox-kop">
-        <h2>Binnengekomen via WhatsApp</h2>
+        <h2>Voorbeeldberichten</h2>
         <button type="button" onClick={onVernieuw} disabled={berichten === null}>
           Andere auto's
         </button>
@@ -34,7 +34,7 @@ export function Inbox({ berichten, onKies, onVernieuw }: Props) {
         </ul>
       )}
 
-      <p className="inbox-hint">Kies een bericht, of plak hieronder je eigen bericht.</p>
+      <p className="inbox-hint">Zo komen aanvragen binnen via WhatsApp. Kies een bericht, of plak hieronder je eigen bericht.</p>
     </section>
   );
 }

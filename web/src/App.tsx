@@ -1,6 +1,7 @@
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import {
   Bericht,
+  Bron,
   Controle,
   Herberekening,
   NietIngelogd,
@@ -18,7 +19,7 @@ import { Inloggen } from "./components/Inloggen";
 
 type Beurt =
   | { soort: "vraag"; tekst: string }
-  | { soort: "antwoord"; tekst: string; tools: string[] }
+  | { soort: "antwoord"; tekst: string; tools: string[]; bronnen: Bron[] }
   | { soort: "fout"; tekst: string };
 
 export function App() {
@@ -50,15 +51,14 @@ export function App() {
     }
   }
 
-  async function onHerbereken(invoer: Herberekening) {
+  async function onHerbereken(invoer: Herberekening): Promise<Controle> {
     try {
-      setControle(await herbereken(invoer));
+      const nieuw = await herbereken(invoer);
+      setControle(nieuw);
       setHerberekend(true);
+      return nieuw;
     } catch (e) {
-      if (e instanceof NietIngelogd) {
-        setIngelogd(false);
-        return;
-      }
+      if (e instanceof NietIngelogd) setIngelogd(false);
       throw e;
     }
   }
@@ -78,7 +78,7 @@ export function App() {
     setBezig(true);
     try {
       const res = await chat([...geschiedenis, { role: "user", content: vraag }]);
-      setBeurten((huidig) => [...huidig, { soort: "antwoord", tekst: res.antwoord, tools: res.tools }]);
+      setBeurten((huidig) => [...huidig, { soort: "antwoord", tekst: res.antwoord, tools: res.tools, bronnen: res.bronnen }]);
       if (res.controle) {
         setControle(res.controle);
         setHerberekend(false);
@@ -125,7 +125,7 @@ export function App() {
             b.soort === "vraag" ? (
               <div key={i} className="vraag">{b.tekst}</div>
             ) : b.soort === "antwoord" ? (
-              <Antwoord key={i} tekst={b.tekst} tools={b.tools} />
+              <Antwoord key={i} tekst={b.tekst} tools={b.tools} bronnen={b.bronnen} />
             ) : (
               <div key={i} className="fout">{b.tekst}</div>
             ),

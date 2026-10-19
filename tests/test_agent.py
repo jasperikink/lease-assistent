@@ -38,8 +38,11 @@ def test_rdw_plat_geeft_nette_fout(monkeypatch):
     assert "niet bereikbaar" in result["fout"]
 
 
-def test_zoek_in_beleid_noemt_sectie():
-    assert "[Starters]" in agent.zoek_in_beleid.invoke({"vraag": "starter zonder jaarcijfers"})
+def test_zoek_in_beleid_geeft_document_en_sectie():
+    bronnen = agent.zoek_in_beleid.invoke({"vraag": "starter zonder jaarcijfers"})
+    assert {"document": "Acceptatiebeleid financial lease", "sectie": "Starters"}.items() <= next(
+        b for b in bronnen if b["sectie"] == "Starters"
+    ).items()
 
 
 def test_controleer_lease_met_kvk_datum(monkeypatch):

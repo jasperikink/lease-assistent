@@ -13,7 +13,7 @@ def geen_wachtwoord(monkeypatch):
 
 
 def test_chat(monkeypatch):
-    antwoord = {"antwoord": "Kan.", "tools": ["controleer_lease"], "controle": None, "voertuig": None}
+    antwoord = {"antwoord": "Kan.", "tools": ["controleer_lease"], "controle": None, "voertuig": None, "bronnen": []}
     monkeypatch.setattr(agent, "ask", lambda berichten: antwoord)
     res = client.post("/chat", json={"berichten": [{"role": "user", "content": "hoi"}]})
     assert res.status_code == 200

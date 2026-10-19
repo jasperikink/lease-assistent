@@ -81,9 +81,9 @@ python -m evals.run_retrieval    # vindt de retrieval de juiste beleidssectie?
 python -m evals.run_extractie    # haalt de agent de juiste gegevens uit een klantbericht? (gebruikt de API)
 ```
 
-De kennisbank in `data/` is een fictief handboek van Voorbeeld Lease B.V., geschreven met behulp van Claude: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies voor adviseurs, samen 49 secties.
+De kennisbank in `data/` is een fictief handboek van Voorbeeld Lease B.V., geschreven met behulp van Claude: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies voor adviseurs, samen 50 secties.
 
-Met alleen BM25 staat bij 30 vragen in 53% van de gevallen de juiste sectie in de top 3. De missers zijn vragen in andere woorden dan het handboek: "zzp'er" in plaats van "starter", "jaarrekening" in plaats van "jaarcijfers", "papieren" in plaats van "documenten". Met `VOYAGE_API_KEY` draait dezelfde eval ook hybrid, zodat je het verschil ziet.
+Met alleen BM25 staat bij 31 vragen in 55% van de gevallen de juiste sectie in de top 3. De missers zijn vragen in andere woorden dan het handboek: "zzp'er" in plaats van "starter", "jaarrekening" in plaats van "jaarcijfers", "papieren" in plaats van "documenten". Met `VOYAGE_API_KEY` draait dezelfde eval ook hybrid, zodat je het verschil ziet.
 
 ## Online zetten (Vercel)
 

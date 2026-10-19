@@ -5,6 +5,9 @@
 ## Wat is het verschil tussen financial lease en operational lease?
 Bij financial lease ben je economisch eigenaar en wordt de auto aan het einde van jou. Bij operational lease huur je de auto en lever je hem aan het einde weer in.
 
+## Welke auto's kan ik bij jullie leasen?
+We hebben zelf geen auto's op voorraad. Je kiest zelf een auto, bij een dealer of van een particulier, en wij financieren hem. Dat kan een personenauto of een bedrijfsauto zijn, nieuw of gebruikt, met een Nederlands kenteken, maximaal 8 jaar oud bij de start en met een aankoopbedrag vanaf €5.000. Motoren, campers, aanhangers en oldtimers financieren we niet.
+
 ## Kan ik een auto uit Duitsland leasen?
 Ja, maar de auto moet bij de start van het contract een Nederlands kenteken hebben. Importkosten en bpm kunnen onderdeel zijn van het aankoopbedrag.
 

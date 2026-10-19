@@ -1,0 +1,19 @@
+[
+  {"vraag": "Mag ik een motor leasen?", "verwacht": "acceptatiebeleid.md#Voertuigen"},
+  {"vraag": "Hoe oud mag de auto zijn?", "verwacht": "acceptatiebeleid.md#Leeftijd van de auto"},
+  {"vraag": "Mijn auto is van 2016, kan dat nog?", "verwacht": "acceptatiebeleid.md#Leeftijd van de auto"},
+  {"vraag": "Wat is de langste looptijd?", "verwacht": "acceptatiebeleid.md#Looptijd"},
+  {"vraag": "Hoeveel jaar kan het contract duren?", "verwacht": "acceptatiebeleid.md#Looptijd"},
+  {"vraag": "Wat is het minimale aankoopbedrag?", "verwacht": "acceptatiebeleid.md#Aankoopbedrag"},
+  {"vraag": "Kan ik een auto van 3000 euro leasen?", "verwacht": "acceptatiebeleid.md#Aankoopbedrag"},
+  {"vraag": "Hoe hoog mag de slottermijn zijn?", "verwacht": "acceptatiebeleid.md#Slottermijn"},
+  {"vraag": "Ik sta pas 3 maanden ingeschreven, kan ik leasen?", "verwacht": "acceptatiebeleid.md#Starters"},
+  {"vraag": "Ik ben net begonnen als zzp'er, kan ik leasen?", "verwacht": "acceptatiebeleid.md#Starters"},
+  {"vraag": "Welke rente betaal ik?", "verwacht": "acceptatiebeleid.md#Rente"},
+  {"vraag": "Ik wil een auto uit Duitsland importeren", "verwacht": "faq.md#Kan ik een auto uit Duitsland leasen?"},
+  {"vraag": "Kan ik een bestelwagen leasen?", "verwacht": "faq.md#Kan ik een bestelbus leasen?"},
+  {"vraag": "Hoe lang duurt het voor ik antwoord heb?", "verwacht": "faq.md#Hoe snel weet ik of het rond is?"},
+  {"vraag": "Moet ik btw betalen?", "verwacht": "faq.md#Wat gebeurt er met de btw?"},
+  {"vraag": "Kan ik de lease tussentijds afkopen?", "verwacht": "faq.md#Kan ik eerder aflossen?"},
+  {"vraag": "Van wie is de auto als het contract afloopt?", "verwacht": "faq.md#Wat gebeurt er aan het einde van het contract?"}
+]

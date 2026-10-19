@@ -1,0 +1,26 @@
+[
+  {
+    "bericht": "Hoi! Ik sta sinds juli bij de KvK. Ik wil de Audi met kenteken H-702-BH kopen voor 42.000, 48 maanden, 10% slottermijn. Kan dat?",
+    "verwacht": {"kenteken": "H702BH", "aankoopprijs": 42000, "looptijd_maanden": 48, "aanbetaling": 0, "slottermijn_pct": 0.1, "starter": true}
+  },
+  {
+    "bericht": "Klant wil H-702-BH voor 42.000 over 36 maanden, 5.000 aanbetaling, staat 2 jaar bij de KvK. Wat wordt het maandbedrag?",
+    "verwacht": {"kenteken": "H702BH", "aankoopprijs": 42000, "looptijd_maanden": 36, "aanbetaling": 5000, "slottermijn_pct": 0, "starter": false}
+  },
+  {
+    "bericht": "goedemiddag, clio XX999X, vraagprijs 14.950. graag 5 jaar looptijd. ik heb mijn bedrijf sinds 2021",
+    "verwacht": {"kenteken": "XX999X", "aankoopprijs": 14950, "looptijd_maanden": 60, "aanbetaling": 0, "slottermijn_pct": 0, "starter": false}
+  },
+  {
+    "bericht": "xx-999-x, 15k, 3 jaar, wil 20% slottermijn en 2500 aanbetalen. Sta pas sinds deze maand ingeschreven",
+    "verwacht": {"kenteken": "XX999X", "aankoopprijs": 15000, "looptijd_maanden": 36, "aanbetaling": 2500, "slottermijn_pct": 0.2, "starter": true}
+  },
+  {
+    "bericht": "Kan ik de auto met kenteken H702BH leasen? Prijs is €41.500,- en ik wil 24 maanden. KvK sinds januari 2023.",
+    "verwacht": {"kenteken": "H702BH", "aankoopprijs": 41500, "looptijd_maanden": 24, "aanbetaling": 0, "slottermijn_pct": 0, "starter": false}
+  },
+  {
+    "bericht": "Ik wil graag een auto leasen voor ongeveer 30 duizend, wat kost dat per maand?",
+    "verwacht": {"vraagt_door": true}
+  }
+]

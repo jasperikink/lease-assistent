@@ -8,7 +8,7 @@ from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from app import agent
+from app import agent, voorbeelden
 
 load_dotenv()
 
@@ -34,6 +34,15 @@ class ChatResponse(BaseModel):
     voertuig: dict | None = None
 
 
+class ControleRequest(BaseModel):
+    kenteken: str
+    aankoopprijs: float
+    looptijd_maanden: int
+    aanbetaling: float = 0
+    slottermijn_pct: float = 0
+    kvk_maanden: int | None = None
+
+
 def controleer_wachtwoord(x_wachtwoord: str | None = Header(default=None)):
     wachtwoord = os.getenv("DEMO_WACHTWOORD")
     if wachtwoord and not secrets.compare_digest(x_wachtwoord or "", wachtwoord):
@@ -54,6 +63,19 @@ def chat(req: ChatRequest):
     except Exception as e:
         log.exception("Fout in de agent")
         raise HTTPException(status_code=502, detail=f"{type(e).__name__}: {e}")
+
+
+@app.get("/voorbeelden", dependencies=[Depends(controleer_wachtwoord)])
+def lijst_voorbeelden() -> list[dict]:
+    return voorbeelden.maak_voorbeelden()
+
+
+@app.post("/controle", dependencies=[Depends(controleer_wachtwoord)])
+def controle(req: ControleRequest) -> dict:
+    resultaat = agent.controleer_lease.invoke(req.model_dump())
+    if "fout" in resultaat:
+        raise HTTPException(status_code=422, detail=resultaat["fout"])
+    return resultaat
 
 
 app.mount("/", StaticFiles(directory=STATIC, html=True), name="static")

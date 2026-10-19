@@ -28,6 +28,17 @@ export type Controle = {
 
 export type Bericht = { role: "user" | "assistant"; content: string };
 
+export type Voorbeeld = { afzender: string; tijd: string; tekst: string };
+
+export type Herberekening = {
+  kenteken: string;
+  aankoopprijs: number;
+  looptijd_maanden: number;
+  aanbetaling: number;
+  slottermijn_pct: number;
+  kvk_maanden: number | null;
+};
+
 export type ChatResponse = {
   antwoord: string;
   tools: string[];
@@ -56,9 +67,9 @@ function bewaarWachtwoord(wachtwoord: string) {
   }
 }
 
-async function post(pad: string, wachtwoord: string, body?: unknown): Promise<Response> {
+async function verzoek(methode: "GET" | "POST", pad: string, wachtwoord: string, body?: unknown): Promise<Response> {
   const res = await fetch(pad, {
-    method: "POST",
+    method: methode,
     headers: { "Content-Type": "application/json", "x-wachtwoord": wachtwoord },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
@@ -69,13 +80,7 @@ async function post(pad: string, wachtwoord: string, body?: unknown): Promise<Re
   return res;
 }
 
-export async function inloggen(wachtwoord: string) {
-  await post("/inloggen", wachtwoord);
-  bewaarWachtwoord(wachtwoord);
-}
-
-export async function chat(berichten: Bericht[]): Promise<ChatResponse> {
-  const res = await post("/chat", opgeslagenWachtwoord(), { berichten });
+async function json<T>(res: Response): Promise<T> {
   const tekst = await res.text();
   if (!res.ok) {
     let detail = tekst;
@@ -87,6 +92,24 @@ export async function chat(berichten: Bericht[]): Promise<ChatResponse> {
     throw new Error(detail);
   }
   return JSON.parse(tekst);
+}
+
+export async function inloggen(wachtwoord: string) {
+  const res = await verzoek("POST", "/inloggen", wachtwoord);
+  if (!res.ok) throw new Error("Inloggen mislukt.");
+  bewaarWachtwoord(wachtwoord);
+}
+
+export async function chat(berichten: Bericht[]): Promise<ChatResponse> {
+  return json(await verzoek("POST", "/chat", opgeslagenWachtwoord(), { berichten }));
+}
+
+export async function voorbeelden(): Promise<Voorbeeld[]> {
+  return json(await verzoek("GET", "/voorbeelden", opgeslagenWachtwoord()));
+}
+
+export async function herbereken(invoer: Herberekening): Promise<Controle> {
+  return json(await verzoek("POST", "/controle", opgeslagenWachtwoord(), invoer));
 }
 
 export const euro = (bedrag: number) =>

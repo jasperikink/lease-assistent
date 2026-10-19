@@ -12,6 +12,10 @@ Binnen een paar seconden krijgt de adviseur:
 - antwoorden op beleidsvragen, met de sectie als bron
 - een conceptbericht om naar de klant te sturen
 
+De adviseur kan daarna in het dossier looptijd, aanbetaling of slottermijn aanpassen en direct herberekenen. Dat gebeurt zonder AI: alleen de regels en de rekensom.
+
+De demo-inbox haalt bij elke keer openen willekeurige echte auto's uit de RDW op, zodat je steeds andere gevallen ziet.
+
 > Het beleid in `data/` is verzonnen voor dit project.
 
 ## Het belangrijkste ontwerpprincipe
@@ -41,7 +45,8 @@ Antwoord + conceptbericht + welke tools gebruikt zijn
 | `app/calc.py` | Rente op basis van de leeftijd van de auto, en het maandbedrag met slottermijn |
 | `app/rag.py` | RAG-pipeline: knipt het beleid op kopjes, zoekt hybrid (BM25 plus Voyage-embeddings, samengevoegd met reciprocal rank fusion) |
 | `app/agent.py` | De LangChain-agent met drie tools |
-| `app/main.py` | FastAPI-endpoint `/chat`, serveert ook de gebouwde React-app |
+| `app/main.py` | FastAPI: `/chat` (agent), `/controle` (herberekenen zonder AI), `/voorbeelden`, wachtwoord, en de gebouwde React-app |
+| `app/voorbeelden.py` | Demo-berichten met willekeurige echte auto's uit de RDW |
 | `web/` | React + TypeScript (Vite): gesprek, dossier met kentekenplaat en oordeel, kopieerbaar klantbericht |
 | `tests/` | Tests voor elke laag; de RDW, de embeddings en het LLM worden gemockt |
 | `evals/` | Retrieval-eval (hit@1, hit@3, MRR) en extractie-eval op echte klantberichten |

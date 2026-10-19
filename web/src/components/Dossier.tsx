@@ -1,4 +1,5 @@
-import { Controle, Voertuig, euro } from "../api";
+import { Controle, Herberekening, Voertuig, euro } from "../api";
+import { Invoer } from "./Invoer";
 import { Kenteken } from "./Kenteken";
 
 const netjes = (tekst: string) =>
@@ -7,16 +8,14 @@ const netjes = (tekst: string) =>
 const maand = (iso: string) =>
   new Date(iso).toLocaleDateString("nl-NL", { month: "long", year: "numeric" });
 
-function kvkTekst(controle: Controle) {
-  const { kvk_maanden, kvk_sinds } = controle.invoer;
-  if (kvk_maanden === null) return "Onbekend";
-  const sinds = kvk_sinds ? `, sinds ${maand(kvk_sinds)}` : "";
-  return `${kvk_maanden} maanden${sinds}`;
-}
+type Props = {
+  controle: Controle | null;
+  voertuig: Voertuig | null;
+  herberekend: boolean;
+  onHerbereken: (invoer: Herberekening) => Promise<void>;
+};
 
-type Props = { controle: Controle | null; voertuig: Voertuig | null };
-
-export function Dossier({ controle, voertuig }: Props) {
+export function Dossier({ controle, voertuig, herberekend, onHerbereken }: Props) {
   const auto = controle?.voertuig ?? voertuig;
 
   if (!auto) {
@@ -39,8 +38,11 @@ export function Dossier({ controle, voertuig }: Props) {
 
       {controle && (
         <>
-          <div className={`oordeel ${controle.geaccepteerd ? "ja" : "nee"}`}>
-            {controle.geaccepteerd ? "Past binnen het beleid" : "Past niet binnen het beleid"}
+          <div className="oordeel-rij">
+            <div className={`oordeel ${controle.geaccepteerd ? "ja" : "nee"}`}>
+              {controle.geaccepteerd ? "Past binnen het beleid" : "Past niet binnen het beleid"}
+            </div>
+            {herberekend && <span className="herberekend">Aangepast door adviseur</span>}
           </div>
 
           {controle.maandbedrag !== null && (
@@ -58,37 +60,7 @@ export function Dossier({ controle, voertuig }: Props) {
             </ul>
           )}
 
-          <h3 className="invoer-kop">Gerekend met</h3>
-          <dl className="feiten">
-            <div>
-              <dt>Aankoopprijs</dt>
-              <dd>{euro(controle.invoer.aankoopprijs)}</dd>
-            </div>
-            <div>
-              <dt>Aanbetaling</dt>
-              <dd>{euro(controle.invoer.aanbetaling)}</dd>
-            </div>
-            <div>
-              <dt>Looptijd</dt>
-              <dd>{controle.invoer.looptijd_maanden} maanden</dd>
-            </div>
-            <div>
-              <dt>Slottermijn</dt>
-              <dd>
-                {controle.invoer.slottermijn_pct > 0
-                  ? `${Math.round(controle.invoer.slottermijn_pct * 100)}%, ${euro(controle.slottermijn_eind)}`
-                  : "Geen"}
-              </dd>
-            </div>
-            <div>
-              <dt>Bij de KvK</dt>
-              <dd>{kvkTekst(controle)}</dd>
-            </div>
-            <div>
-              <dt>Rente</dt>
-              <dd>{controle.rente_pct.toLocaleString("nl-NL")}%</dd>
-            </div>
-          </dl>
+          <Invoer controle={controle} onHerbereken={onHerbereken} />
 
           {controle.let_op && <p className="let-op">{controle.let_op}</p>}
         </>

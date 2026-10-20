@@ -102,10 +102,6 @@ python -m evals.run_retrieval    # vindt hij de juiste sectie?
 python -m evals.run_extractie    # haalt de agent de juiste gegevens uit een bericht? (gebruikt de API)
 ```
 
-## Online zetten
-
-De demo draait op Vercel als één FastAPI-service die ook de React-app serveert (zie `vercel.json`). Zet bij Environment Variables `ANTHROPIC_API_KEY`, `ANTHROPIC_MODEL`, `ANTHROPIC_WORKSPACE_ID` (alleen als je key aan een workspace hangt), `DEMO_WACHTWOORD` en optioneel `VOYAGE_API_KEY`. Zonder `DEMO_WACHTWOORD` kan iedereen met de link erbij.
-
 ## Kosten en misbruik
 
 Een demo met een API-key erachter moet je afschermen. Het wachtwoord wordt op de server gecontroleerd. Per IP kunnen er 15 vragen per uur gesteld worden. Berichten zijn maximaal 1.500 tekens, alleen de laatste 6 berichten van een gesprek gaan mee naar het model, en een antwoord is maximaal 1.024 tokens. In de browser staat een teller van 5 vragen, maar dat is gebruiksgemak, geen beveiliging. Daarnaast staat er een uitgavenlimiet in de Anthropic Console.

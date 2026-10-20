@@ -1,5 +1,3 @@
-from datetime import date
-
 import requests
 
 from app import voorbeelden

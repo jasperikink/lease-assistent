@@ -20,8 +20,15 @@ SANNE = {
     "tekst": "Moet ik bij financial lease de btw in één keer betalen?",
 }
 
+OLIVIA = {
+    "afzender": "Olivia, UX designer",
+    "tekst": "Hi! I moved to Amsterdam last year and I've been registered with the KvK since March 2025. "
+    "Can I lease the Audi with plate H-702-BH for 39,500 over 36 months, with 4,000 down?",
+}
+
 AANVRAGEN = [
     LOTTE,
+    OLIVIA,
     {
         "afzender": "Thomas, architect",
         "tekst": "Goedemiddag, kan ik de Audi H-702-BH leasen? Prijs 39.500, 36 maanden, "
@@ -51,6 +58,7 @@ BELEIDSVRAGEN = [
     {"afzender": "Bram, loodgieter", "tekst": "Ik heb een paar jaar geleden een BKR-registratie gehad. Kan ik nog leasen?"},
     {"afzender": "Eva, stylist", "tekst": "Ik heb een auto in Duitsland gezien. Kan ik die via jullie leasen?"},
     {"afzender": "Youssef, koerier", "tekst": "Mag ik mijn leaseauto verkopen voordat het contract is afgelopen?"},
+    {"afzender": "James, consultant", "tekst": "Do I have to pay the VAT on the car upfront, or is it included in the lease?"},
 ]
 
 NAMEN_AUTO = ["Daan, IT-consultant", "Sophie, marketingbureau", "Lars, makelaar", "Iris, tandarts"]
@@ -122,4 +130,6 @@ def maak_voorbeelden(nieuw: bool = False) -> list[dict]:
     if bus:
         berichten.append(bericht_bus(bus, random.choice(NAMEN_BUS)))
     berichten += vragen[: max(1, 4 - len(berichten))]
+    if not nieuw:
+        berichten.append(OLIVIA)
     return met_tijden(berichten)

@@ -114,7 +114,8 @@ def controleer_lease(
 @tool
 def zoek_in_beleid(vraag: str) -> list[dict]:
     """Zoek in het handboek: acceptatiebeleid, algemene voorwaarden, producten, aanvraagproces, FAQ en werkinstructies.
-    Gebruik dit voor elke vraag over regels, voorwaarden, btw, aflossen, documenten of het proces."""
+    Gebruik dit voor elke vraag over regels, voorwaarden, btw, aflossen, documenten of het proces.
+    Het handboek is Nederlands: stel de zoekvraag altijd in het Nederlands, ook als de klant Engels schrijft."""
     return [
         {"document": p.metadata["titel"], "sectie": p.metadata["sectie"], "tekst": p.page_content}
         for p in rag.zoek(vraag, k=3)
@@ -148,6 +149,8 @@ Vorm van je antwoord:
 - Daarna maximaal vier korte punten met de belangrijkste details of aannames.
 - Sluit af met "Bericht aan de klant:" en een kort, vriendelijk WhatsApp-bericht in je/jij-vorm.
 - Geen kopjes. Hooguit 120 woorden, het klantbericht niet meegerekend.
+- Schrijft de klant Engels, schrijf het klantbericht dan in het Engels. De rest van je antwoord is voor de
+  adviseur en blijft Nederlands, net als "Bericht aan de klant:".
 """
 
 

@@ -42,6 +42,8 @@ Het model krijgt bij elke vraag een lijst met drie tools, met per tool een besch
 
 Als de adviseur daarna de looptijd of aanbetaling aanpast, gaat dat via `/controle` direct naar dezelfde check, zonder model ertussen. Dat is sneller, kost geen tokens en geeft elke keer hetzelfde antwoord.
 
+Schrijft een klant in het Engels, dan staat het conceptbericht ook in het Engels. Het handboek is Nederlands, dus de agent zoekt daarin altijd met een Nederlandse zoekvraag. De uitleg voor de adviseur blijft Nederlands.
+
 Een nieuwe auto die nog geen kenteken heeft, kan ook. Dan valt er niets op te halen bij de RDW, dus de controle rekent met een auto van 0 maanden oud en volgt verder hetzelfde beleid.
 
 ## RAG

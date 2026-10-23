@@ -22,5 +22,9 @@
   {
     "bericht": "Ik wil graag een auto leasen voor ongeveer 30 duizend, wat kost dat per maand?",
     "verwacht": {"vraagt_door": true}
+  },
+  {
+    "bericht": "Hi! I moved to Amsterdam last year and I've been registered with the KvK since March 2025. Can I lease the Audi with plate H-702-BH for 39,500 over 36 months, with 4,000 down?",
+    "verwacht": {"kenteken": "H702BH", "aankoopprijs": 39500, "looptijd_maanden": 36, "aanbetaling": 4000, "slottermijn_pct": 0, "starter": false}
   }
 ]

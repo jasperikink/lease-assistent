@@ -24,7 +24,7 @@ def test_eerste_keer_lotte_en_sanne(monkeypatch):
     monkeypatch.setattr(voorbeelden.requests, "get", lambda *a, **kw: Antwoord([KIA]))
     berichten = voorbeelden.maak_voorbeelden()
     teksten = [b["tekst"] for b in berichten]
-    assert len(berichten) == 4
+    assert len(berichten) == 5
     assert "H-702-BH" in teksten[0]
     assert "AB123C" in teksten[1]
     assert "30.000" in teksten[1]
@@ -37,7 +37,7 @@ def test_zonder_rdw_toch_vier_berichten(monkeypatch):
 
     monkeypatch.setattr(voorbeelden.requests, "get", plat)
     berichten = voorbeelden.maak_voorbeelden()
-    assert len(berichten) == 4
+    assert len(berichten) == 5
     assert "H-702-BH" in berichten[0]["tekst"]
 
 
@@ -52,3 +52,9 @@ def test_tijden_lopen_op(monkeypatch):
     tijden = [b["tijd"] for b in voorbeelden.maak_voorbeelden(nieuw=True)]
     assert tijden == sorted(tijden)
     assert len(set(tijden)) == len(tijden)
+
+
+def test_eerste_keer_ook_een_engelstalige_klant(monkeypatch):
+    monkeypatch.setattr(voorbeelden.requests, "get", lambda *a, **kw: Antwoord([KIA]))
+    teksten = [b["tekst"] for b in voorbeelden.maak_voorbeelden()]
+    assert voorbeelden.OLIVIA["tekst"] in teksten
